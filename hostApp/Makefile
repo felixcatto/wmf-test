@@ -1,5 +1,5 @@
 start:
-	npx webpack
+	npx webpack serve
 
 start-prod:
 	echo 'implement me'

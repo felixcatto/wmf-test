@@ -34,6 +34,7 @@ module.exports = {
         md: '0 4px 6px -1px rgb(0 0 0 / 0.25), 0 2px 4px -2px rgb(0 0 0 / 0.25)',
         lg: '0 10px 15px -3px rgb(0 0 0 / 0.25), 0 4px 6px -4px rgb(0 0 0 / 0.25)',
         xl: '0 20px 25px -5px rgb(0 0 0 / 0.25), 0 8px 10px -6px rgb(0 0 0 / 0.25)',
+        inner: 'inset 0 0 5px 2px rgb(0 0 0 / 0.2)',
       },
       borderRadius: {
         sm: '4px',
