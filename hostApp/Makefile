@@ -2,7 +2,7 @@ start:
 	npx webpack serve
 
 start-prod:
-	echo 'implement me'
+	npx servor dist/public index.html 3000
 
 build:
 	NODE_ENV=production npx webpack
