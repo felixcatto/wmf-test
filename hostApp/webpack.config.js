@@ -84,6 +84,7 @@ let config = {
     },
     hot: true,
     compress: true,
+    historyApiFallback: true,
     client: { logging: 'warn' },
   },
 };

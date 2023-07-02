@@ -1,16 +1,24 @@
-import { css } from '@emotion/react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { getUrl } from '../lib/utils.jsx';
+import { Cats } from '../pages/cats/Index.jsx';
+import { Home } from '../pages/home/Index.jsx';
+import { Users } from '../pages/users/Index.jsx';
+
+const router = createBrowserRouter([
+  {
+    path: getUrl('home'),
+    element: <Home />,
+  },
+  {
+    path: getUrl('users'),
+    element: <Users />,
+  },
+  {
+    path: getUrl('cats'),
+    element: <Cats />,
+  },
+]);
 
 export const App = () => {
-  console.log(32);
-
-  return (
-    <div className="container py-4 bg-white h-full shadow-inner">
-      <div className="text-amber-700 text-x1.5">Hi bro!</div>
-      <div css={myClass}>Is styled components ok?</div>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 };
-
-const myClass = css`
-  color: green;
-`;
