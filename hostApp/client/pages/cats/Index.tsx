@@ -1,8 +1,7 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { Layout } from '../../common/layout.jsx';
 import { catsApi } from '../../lib/utils.jsx';
-import { useLoaderData } from 'react-router-dom';
 
 export const Cats = () => {
   const initialImgUrl: any = useLoaderData();
@@ -44,7 +43,4 @@ export const Cats = () => {
   );
 };
 
-export const catsLoader = async args => {
-  const { request } = args;
-  return catsApi.getRandomCat();
-};
+export const catsLoader = async _args => catsApi.getRandomCat();

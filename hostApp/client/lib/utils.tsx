@@ -1,13 +1,16 @@
+import axios from 'axios';
 import { isEmpty } from 'lodash-es';
 import { compile } from 'path-to-regexp';
+import { paths } from './apiTypes/schema.js';
 import { IMakeEnum, IMakeUrlFor } from './types.js';
-import axios from 'axios';
 
 export const routes = {
   home: '/',
   users: '/users',
   user: '/users/:id',
   cats: '/cats',
+  pets: '/pets',
+  pet: '/pets/:id',
 } as const;
 
 export const qs = {
@@ -47,8 +50,20 @@ export const makeUrlFor: IMakeUrlFor = rawRoutes => {
 };
 
 export const getUrl = makeUrlFor(routes);
-export const getApiUrl = (name: keyof typeof routes, routeParams?, query?) =>
-  `/api${getUrl(name, routeParams, query)}`;
+
+const baseApiUrl = 'https://petstore3.swagger.io/api/v3';
+
+export const getApiUrl = <T extends keyof paths>(routePath: T, routeParams?, query?) => {
+  const newQuery = isEmpty(query) ? '' : `?${qs.stringify(query)}`;
+  let newRoutePath: any = routePath;
+
+  if (!isEmpty(routeParams)) {
+    const tmpRoutePath = routePath.replaceAll('{', ':').replaceAll('}', '');
+    newRoutePath = compile(tmpRoutePath)(routeParams);
+  }
+
+  return `${baseApiUrl}${newRoutePath}${newQuery}`;
+};
 
 export const makeEnum: IMakeEnum = (...args) =>
   args.reduce((acc, key) => ({ ...acc, [key]: key }), {} as any);

@@ -24,6 +24,7 @@ let config = {
   output: {
     filename: isProd ? 'js/index.[contenthash:6].js' : 'js/index.js',
     path: path.resolve(__dirname, 'dist/public'),
+    publicPath: '/',
   },
 
   resolve: {
