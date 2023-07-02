@@ -14,6 +14,11 @@
   --secondary-rgba-25: hsl(209.84deg 78.72% 46.08% / 25%);
 }
 
+@font-face {
+  font-family: Ubuntu;
+  src: url('/font/Ubuntu-Regular.ttf');
+}
+
 html,
 body,
 #root {
@@ -22,16 +27,11 @@ body,
 
 html {
   font-size: 18px;
+  font-family: Ubuntu;
 }
 
-@font-face {
-  font-family: Ubuntu;
-  src: url('/font/Ubuntu-Regular.ttf');
-}
-
-body {
-  @apply bg-sky-500;
-  font-family: Ubuntu;
+.app {
+  height: 100%;
   background-image: url('/img/s2.jpg');
   background-position: center;
   background-size: cover;

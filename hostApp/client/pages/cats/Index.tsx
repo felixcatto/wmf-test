@@ -2,8 +2,10 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Layout } from '../../common/layout.jsx';
 import { catsApi } from '../../lib/utils.jsx';
+import { useLoaderData } from 'react-router-dom';
 
 export const Cats = () => {
+  const initialImgUrl: any = useLoaderData();
   const [imgUrl, setImgUrl] = useState<any>(null);
   const [catSays, setCatSays] = useState('');
 
@@ -16,10 +18,6 @@ export const Cats = () => {
     const url = await catsApi.getCatWithText(catSays);
     setImgUrl(url);
   };
-
-  useEffect(() => {
-    catsApi.getRandomCat().then(url => setImgUrl(url));
-  }, []);
 
   return (
     <Layout>
@@ -38,9 +36,15 @@ export const Cats = () => {
           </div>
         </div>
 
-        {imgUrl && <img src={imgUrl} alt="" className="h-96 mx-auto shadow-md rounded-md" />}
+        <img src={initialImgUrl} alt="" className="h-80 mx-auto shadow-md rounded-md" />
+
+        {imgUrl && <img src={imgUrl} alt="" className="h-80 mx-auto shadow-md rounded-md mt-4" />}
       </div>
     </Layout>
   );
 };
 
+export const catsLoader = async args => {
+  const { request } = args;
+  return catsApi.getRandomCat();
+};

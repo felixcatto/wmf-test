@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { getUrl } from '../lib/utils.jsx';
-import { Cats } from '../pages/cats/Index.jsx';
+import { catsApi, getUrl } from '../lib/utils.jsx';
+import { Cats, catsLoader } from '../pages/cats/Index.jsx';
 import { Home } from '../pages/home/Index.jsx';
 import { Users } from '../pages/users/Index.jsx';
 
@@ -16,6 +16,7 @@ const router = createBrowserRouter([
   {
     path: getUrl('cats'),
     element: <Cats />,
+    loader: catsLoader,
   },
 ]);
 
