@@ -5,3 +5,4 @@ dist
 # hack, because "@trivago/prettier-plugin-sort-imports" can't skip part of file
 client/main/index.tsx
 client/main/indexAsync.tsx
+

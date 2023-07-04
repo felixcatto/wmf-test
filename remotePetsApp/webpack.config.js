@@ -12,13 +12,14 @@ import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin
 const dirname = url => fileURLToPath(path.dirname(url));
 const __dirname = dirname(import.meta.url);
 
-const pkg = JSON.parse(fs.readFileSync('./package.json'));
+const pkg = JSON.parse(fs.readFileSync('../hostApp/package.json'));
 const deps = pkg.dependencies;
 
 const mode = process.env.NODE_ENV || 'development';
 const isDev = mode === 'development';
 const isProd = mode === 'production';
 const isAnalyze = process.env.ANALYZE;
+const shouldUseHmr = process.env.NO_HMR ? false : true;
 
 /** @type { import('webpack').Configuration } */
 let config = {
@@ -31,7 +32,7 @@ let config = {
   output: {
     filename: isProd ? 'js/index.[contenthash:6].js' : 'js/index.js',
     path: path.resolve(__dirname, 'dist/public'),
-    publicPath: '/',
+    publicPath: 'http://localhost:3001/',
   },
 
   resolve: {
@@ -83,11 +84,17 @@ let config = {
           { from: 'public', to: '.', filter: filePath => !filePath.endsWith('index.html') },
         ],
       }),
-    new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'public/index.html') }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'public/index.html'),
+      excludeChunks: ['petsApp'],
+    }),
     new ModuleFederationPlugin({
-      name: 'host',
-      remotes: {
-        petsApp: 'petsApp@http://localhost:3001/remoteEntry.js',
+      name: 'petsApp',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './Counter': './client/UI/Counter.tsx',
+        './Pets': './client/pages/pets/IndexPage.tsx',
+        './Pet': './client/pages/pets/@petIdPage.tsx',
       },
       shared: Object.keys(deps)
         .filter(dep => dep !== '@emotion/react')
@@ -104,9 +111,9 @@ let config = {
   // optimization: { splitChunks: false },
 
   devServer: {
-    port: 3000,
+    port: 3001,
     static: { directory: path.resolve(__dirname, 'public') },
-    hot: true,
+    hot: shouldUseHmr,
     compress: true,
     historyApiFallback: true,
     client: { logging: 'warn' },
