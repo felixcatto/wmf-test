@@ -55,7 +55,7 @@ let config = {
                 react: {
                   runtime: 'automatic',
                   importSource: '@emotion/react',
-                  refresh: isDev,
+                  refresh: isDev && shouldUseHmr,
                 },
               },
             },
@@ -76,7 +76,7 @@ let config = {
   plugins: [
     new webpack.ids.HashedModuleIdsPlugin(),
     isAnalyze && new BundleAnalyzerPlugin(),
-    isDev && new ReactRefreshWebpackPlugin(),
+    isDev && shouldUseHmr && new ReactRefreshWebpackPlugin(),
     isProd && new MiniCssExtractPlugin({ filename: 'css/index.[contenthash:6].css' }),
     isProd &&
       new CopyPlugin({

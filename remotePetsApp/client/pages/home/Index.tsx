@@ -1,4 +1,4 @@
-// import { css } from '@emotion/react';
+import { css } from '@emotion/react';
 import { Layout } from '../../common/layout.jsx';
 
 export const Home = () => {
@@ -6,7 +6,7 @@ export const Home = () => {
     <Layout>
       <div>
         <div className="text-amber-700">Hi bro!</div>
-        <div title="css={myClass}" className="mb-4">
+        <div css={myClass} className="mb-4">
           Is styled components ok?
         </div>
         <img src="/img/s2.jpg" alt="" className="rounded-md h-96 mx-auto shadow-md" />
@@ -15,6 +15,6 @@ export const Home = () => {
   );
 };
 
-// const myClass = css`
-//   color: green;
-// `;
+const myClass = css`
+  color: green;
+`;

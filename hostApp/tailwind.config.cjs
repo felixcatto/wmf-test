@@ -1,9 +1,8 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 const rem2px = (input, fontSize = 16) => {
-  if (input == null) {
-    return input;
-  }
+  if (input == null) return input;
+
   switch (typeof input) {
     case 'object':
       if (Array.isArray(input)) {
@@ -24,7 +23,7 @@ const rem2px = (input, fontSize = 16) => {
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./client/**/*.{js,jsx,ts,tsx}', './node_modules/@felixcatto/ui/src/**/*.{ts,tsx}'],
+  content: ['./client/**/*.{js,jsx,ts,tsx}'],
   theme: {
     spacing: rem2px(defaultTheme.spacing),
     extend: {
@@ -33,16 +32,8 @@ module.exports = {
         DEFAULT: '0 1px 3px 0 rgb(0 0 0 / 0.25), 0 1px 2px -1px rgb(0 0 0 / 0.25)',
         md: '0 4px 6px -1px rgb(0 0 0 / 0.25), 0 2px 4px -2px rgb(0 0 0 / 0.25)',
         lg: '0 10px 15px -3px rgb(0 0 0 / 0.25), 0 4px 6px -4px rgb(0 0 0 / 0.25)',
-        xl: '0 20px 25px -5px rgb(0 0 0 / 0.25), 0 8px 10px -6px rgb(0 0 0 / 0.25)',
-        inner: 'inset 0 0 5px 2px rgb(0 0 0 / 0.2)',
       },
-      borderRadius: {
-        sm: '4px',
-        DEFAULT: '6px',
-        md: '8px',
-        lg: '12px',
-        xl: '16px',
-      },
+      borderRadius: { sm: '4px', DEFAULT: '6px', md: '8px', lg: '12px' },
       fontSize: {
         'x1.25': ['1.25rem', '1.75rem'],
         'x1.5': ['1.5rem', '1.9rem'],
@@ -53,7 +44,6 @@ module.exports = {
         'x2.75': ['2.75rem', '2.85rem'],
         x3: ['3rem', '1'],
         x4: ['4rem', '1'],
-        x5: ['5rem', '1'],
       },
     },
   },
