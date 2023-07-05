@@ -3,15 +3,16 @@ import { Link, useLoaderData } from 'react-router-dom';
 import { IPet } from '../../lib/types.js';
 import { getApiUrl, getUrl } from '../../lib/utils.jsx';
 import { css } from '@emotion/react';
+import { gs } from '../../css/styles.jsx';
 
 const PetsPage = () => {
   const pets = useLoaderData() as IPet[];
 
   return (
     <div>
-      <div className="text-lime-500 mb-4">Hi from Pets!</div>
-      <div css={myClass} className="rounded px-2 inline-block mb-2 shadow">Hello?</div>
-      <table className="table">
+      <div css={{ color: '#84cc16', marginBottom: 16 }}>Hi from Pets!</div>
+      <div css={s.hello}>Hello?</div>
+      <table css={gs.table}>
         <thead>
           <tr>
             <th>ID</th>
@@ -23,7 +24,10 @@ const PetsPage = () => {
           {pets.map(pet => (
             <tr key={pet.id}>
               <td>
-                <Link to={getUrl('pet', { id: pet.id })} className="pr-3 py-1">
+                <Link
+                  to={getUrl('pet', { id: pet.id })}
+                  css={{ paddingRight: 12, paddingTop: 4, paddingBottom: 4 }}
+                >
                   {pet.id}
                 </Link>
               </td>
@@ -37,10 +41,17 @@ const PetsPage = () => {
   );
 };
 
-const myClass = css`
-  background: red;
-  color: white;
-`;
+const s = {
+  hello: css`
+    display: inline-block;
+    margin-bottom: 8px;
+    background: red;
+    color: white;
+    border-radius: 6px;
+    padding: 0 8px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.25), 0 1px 2px -1px rgb(0 0 0 / 0.25);
+  `,
+};
 
 export const loader = async () => {
   const res = await axios.get<IPet[]>(getApiUrl('/pet/findByStatus', {}, { status: 'available' }));

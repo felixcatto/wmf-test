@@ -5,7 +5,12 @@ export const Users = () => {
   return (
     <Layout>
       <div>
-        <div className="text-green-700">Hi bro from Users!</div>
+        <div className="row">
+          <div className="col" css={{ color: 'seagreen' }}>
+            Hi finally worked!!!
+          </div>
+          <div className="col">bootstrap?</div>
+        </div>
 
         <Counter />
       </div>

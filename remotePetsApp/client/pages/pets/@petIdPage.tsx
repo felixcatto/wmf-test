@@ -1,12 +1,19 @@
 import axios from 'axios';
-import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
+import { Link, LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
 import { IPet } from '../../lib/types.js';
-import { getApiUrl } from '../../lib/utils.jsx';
+import { getApiUrl, getUrl } from '../../lib/utils.jsx';
+import { gs } from '../../css/styles.jsx';
 
 export const PetPage = () => {
   const pet = useLoaderData() as IPet;
 
-  return <pre>{JSON.stringify(pet, null, 2)}</pre>;
+  return (
+    <div>
+      <Link to={getUrl('pets')} css={[gs.btn, { marginBottom: 12 }]}>I Will Be Back button</Link>
+
+      <pre>{JSON.stringify(pet, null, 2)}</pre>
+    </div>
+  );
 };
 
 export const loader = async (args: LoaderFunctionArgs) => {
