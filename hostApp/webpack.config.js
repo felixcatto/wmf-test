@@ -89,15 +89,13 @@ let config = {
       remotes: {
         petsApp: 'petsApp@http://localhost:3001/remoteEntry.js',
       },
-      shared: Object.keys(deps)
-        .filter(dep => dep !== '@emotion/react')
-        .reduce(
-          (acc, dep) => ({
-            ...acc,
-            [dep]: { singleton: true, requiredVersion: deps[dep] },
-          }),
-          {}
-        ),
+      shared: Object.keys(deps).reduce(
+        (acc, dep) => ({
+          ...acc,
+          [dep]: { singleton: true, requiredVersion: deps[dep] },
+        }),
+        {}
+      ),
     }),
   ].filter(Boolean),
 

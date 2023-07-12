@@ -21,6 +21,23 @@ const isProd = mode === 'production';
 const isAnalyze = process.env.ANALYZE;
 const shouldUseHmr = process.env.NO_HMR ? false : true;
 
+const mf = {
+  name: 'petsApp',
+  filename: 'remoteEntry.js',
+  exposes: {
+    './Counter': './client/UI/Counter.tsx',
+    './Pets': './client/pages/pets/IndexPage.tsx',
+    './Pet': './client/pages/pets/@petIdPage.tsx',
+  },
+  shared: Object.keys(deps).reduce(
+    (acc, dep) => ({
+      ...acc,
+      [dep]: { singleton: true, requiredVersion: deps[dep] },
+    }),
+    {}
+  ),
+};
+
 /** @type { import('webpack').Configuration } */
 let config = {
   mode,
@@ -44,6 +61,16 @@ let config = {
 
   module: {
     rules: [
+      isProd && {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'dts-loader',
+            options: { name: mf.name, exposes: mf.exposes, typesOutputDir: 'dist/public' },
+          },
+        ],
+      },
       {
         test: /(\.js$|\.ts$|\.tsx)/,
         exclude: /node_modules/,
@@ -70,7 +97,7 @@ let config = {
           'postcss-loader',
         ],
       },
-    ],
+    ].filter(Boolean),
   },
 
   plugins: [
@@ -88,24 +115,7 @@ let config = {
       template: path.resolve(__dirname, 'public/index.html'),
       excludeChunks: ['petsApp'],
     }),
-    new ModuleFederationPlugin({
-      name: 'petsApp',
-      filename: 'remoteEntry.js',
-      exposes: {
-        './Counter': './client/UI/Counter.tsx',
-        './Pets': './client/pages/pets/IndexPage.tsx',
-        './Pet': './client/pages/pets/@petIdPage.tsx',
-      },
-      shared: Object.keys(deps)
-        .filter(dep => dep !== '@emotion/react')
-        .reduce(
-          (acc, dep) => ({
-            ...acc,
-            [dep]: { singleton: true, requiredVersion: deps[dep] },
-          }),
-          {}
-        ),
-    }),
+    new ModuleFederationPlugin(mf),
   ].filter(Boolean),
 
   // optimization: { splitChunks: false },

@@ -20,3 +20,10 @@ prettier:
 generateApiTypings:
 	npx openapi-typescript https://petstore3.swagger.io/api/v3/openapi.json \
 	  -o ./client/lib/apiTypes/schema.d.ts
+
+generatePetsAppTypings:
+	cd ../remotePetsApp
+	make build
+	cd ../hostApp
+	mkdir -p types
+	cp -r ../remotePetsApp/dist/public/petsApp types/petsApp

@@ -11,6 +11,7 @@ npm-debug.log*
 # typescript
 *.tsbuildinfo
 *.css.d.ts
+types/
 
 # Local Dev
 .yalc/
